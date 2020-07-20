@@ -1,8 +1,29 @@
 # SenseHat
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sense_hat`. To experiment with that code, run `bin/console` for an interactive prompt.
+## TODO
+### Display
+[x] clear
+[x] set pixels
+[ ] get pixels
+[ ] set pixel
+[ ] get pixel
+[ ] rotation
+[ ] flip_h
+[ ] flip_v
+[ ] load_image
+[ ] show_message
+[ ] show_letter
 
-TODO: Delete this and the text above, and describe your gem
+### Environment
+[ ] humidity
+[ ] temp from humidity
+[ ] pressure
+[ ] temp from pressure
+
+### IMU Sensor
+[ ] compass
+[ ] gyro
+[ ] acceleration
 
 ## Installation
 
@@ -22,7 +43,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Initialize a display object
+
+```ruby
+  display = SenseHat::Display.new
+```
+
+### Clear the display
+
+```ruby
+  display.clear
+```
+
+### Setting the display
+Pass a 64 element array of RGB colour values to `SenseHat::Display#set_pixels`.
+Each pixel is represented as an array of 3 integers in the range 0..255
+indicating it's RGB value.  
+The below example would set the whole display to red.
+
+```ruby
+  display.set_pixels([
+    [255, 0, 0],
+    [255, 0, 0],
+    ...
+    [255, 0, 0]
+  ])
+```
 
 ## Development
 

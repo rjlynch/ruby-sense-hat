@@ -1,4 +1,5 @@
 require "bundler/setup"
+require 'byebug'
 require "sense_hat"
 
 RSpec.configure do |config|
