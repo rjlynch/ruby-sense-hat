@@ -1,9 +1,9 @@
 # SenseHat - WIP
 I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sensehat.
 
-## TODO
+## Features
 <details>
-    <summary>Features so far</summary>
+    <summary>TODO list of supported features</summary>
     
     ### Display
     [x] clear  
