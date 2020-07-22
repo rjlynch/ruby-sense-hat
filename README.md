@@ -31,20 +31,29 @@ I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sen
 </details>
 
 ## Installation
+On your raspberry-pi
 
-Add this line to your application's Gemfile:
+`pi@raspberrypi:~/Scripts/test $ echo "gem 'sense_hat', git: 'https://github.com/rjlynch/ruby-sense-hat'" >> Gemfile`  
+`pi@raspberrypi:~/Scripts/test $ bundle`  
 
-```ruby
-gem 'sense_hat'
+Then fire up irb and require bundler set up and the gem
+
+```
+pi@raspberrypi:~/Scripts/test $ irb
+irb(main):001:0> require 'bundler/setup'
+irb(main):002:0> require 'sense_hat'
 ```
 
-And then execute:
+Then have a play around!  
+The below snippet will make the LED display all green.
+```
+irb(main):003:0> display = SenseHat::Display.new
+=> #<SenseHat::Display:0x01644ea0 @device=#<SenseHat::Display::Device:0x01644e88 @device_path="/dev/fb1">>
+irb(main):004:0> display.set_pixels Array.new(64) { [0, 255, 0] }
+irb(main):005:0> display.clear
+irb(main):006:0> exit
+```
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install sense_hat
 
 ## Usage
 
