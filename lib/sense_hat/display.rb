@@ -22,9 +22,7 @@ module SenseHat
 
       pixels.each(&:validate!)
 
-      @device.open do |f|
-        f.write pixels.sort_by(&:position).map(&:rgb565).join
-      end
+      @device.write pixels.sort_by(&:position).map(&:rgb565).join
     end
 
     def get_pixels

@@ -21,9 +21,9 @@ module SenseHat
         )
       end
 
-      def open
+      def write(content)
         File.open(@device_path, 'wb') do |f|
-          yield f
+          f.write content
         end
       end
     end
