@@ -2,6 +2,8 @@
 I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sensehat.
 
 ## TODO
+<details>
+    <summary>Features so far</summary>
 ### Display
 [x] clear  
 [x] set pixels  
@@ -25,6 +27,7 @@ I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sen
 [ ] compass  
 [ ] gyro  
 [ ] acceleration  
+</details>
 
 ## Installation
 
