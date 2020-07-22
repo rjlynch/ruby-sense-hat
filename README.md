@@ -2,28 +2,28 @@
 
 ## TODO
 ### Display
-[x] clear
-[x] set pixels
-[ ] get pixels
-[ ] set pixel
-[ ] get pixel
-[ ] rotation
-[ ] flip_h
-[ ] flip_v
-[ ] load_image
-[ ] show_message
-[ ] show_letter
+[x] clear  
+[x] set pixels  
+[ ] get pixels  
+[ ] set pixel  
+[ ] get pixel  
+[ ] rotation  
+[ ] flip_h  
+[ ] flip_v  
+[ ] load_image  
+[ ] show_message  
+[ ] show_letter  
 
 ### Environment
-[ ] humidity
-[ ] temp from humidity
-[ ] pressure
-[ ] temp from pressure
+[ ] humidity  
+[ ] temp from humidity  
+[ ] pressure  
+[ ] temp from pressure  
 
 ### IMU Sensor
-[ ] compass
-[ ] gyro
-[ ] acceleration
+[ ] compass  
+[ ] gyro  
+[ ] acceleration  
 
 ## Installation
 
