@@ -1,4 +1,5 @@
 # SenseHat
+I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sensehat.
 
 ## TODO
 ### Display
