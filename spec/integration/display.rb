@@ -12,8 +12,10 @@ TESTS = {
 
 TESTS.each do |name, test|
   display.clear
+  puts '-' * 80
   puts name
   display.set_pixels test
+  p display.get_pixels
   sleep 1
 end
 

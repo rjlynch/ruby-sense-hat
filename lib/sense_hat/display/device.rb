@@ -26,6 +26,10 @@ module SenseHat
           f.write content
         end
       end
+
+      def read
+        File.binread @device_path
+      end
     end
   end
 end
