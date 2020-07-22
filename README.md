@@ -31,12 +31,12 @@ I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sen
 </details>
 
 ## Installation
-On your raspberry-pi
+On your raspberry-pi (make sure you have ruby installed!)
 
 `pi@raspberrypi:~/Scripts/test $ echo "gem 'sense_hat', git: 'https://github.com/rjlynch/ruby-sense-hat'" >> Gemfile`  
 `pi@raspberrypi:~/Scripts/test $ bundle`  
 
-Then fire up irb and require bundler set up and the gem
+Fire up irb and require bundler set up and the gem
 
 ```
 pi@raspberrypi:~/Scripts/test $ irb
