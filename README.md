@@ -4,29 +4,30 @@ I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sen
 ## TODO
 <details>
     <summary>Features so far</summary>
-### Display
-[x] clear  
-[x] set pixels  
-[ ] get pixels  
-[ ] set pixel  
-[ ] get pixel  
-[ ] rotation  
-[ ] flip_h  
-[ ] flip_v  
-[ ] load_image  
-[ ] show_message  
-[ ] show_letter  
+    
+    ### Display
+    [x] clear  
+    [x] set pixels  
+    [ ] get pixels  
+    [ ] set pixel  
+    [ ] get pixel  
+    [ ] rotation  
+    [ ] flip_h  
+    [ ] flip_v  
+    [ ] load_image  
+    [ ] show_message  
+    [ ] show_letter  
+    
+    ### Environment
+    [ ] humidity  
+    [ ] temp from humidity  
+    [ ] pressure  
+    [ ] temp from pressure  
 
-### Environment
-[ ] humidity  
-[ ] temp from humidity  
-[ ] pressure  
-[ ] temp from pressure  
-
-### IMU Sensor
-[ ] compass  
-[ ] gyro  
-[ ] acceleration  
+    ### IMU Sensor
+    [ ] compass  
+    [ ] gyro  
+    [ ] acceleration  
 </details>
 
 ## Installation
