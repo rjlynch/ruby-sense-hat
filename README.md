@@ -1,5 +1,5 @@
 # SenseHat - WIP
-I prefer working with Ruby, so here's a Ruby wrapper around the raspberry-pi sensehat.
+I prefer working with Ruby, so here's a Ruby interface for the raspberry-pi sensehat.
 
 ## Features
 <details>
