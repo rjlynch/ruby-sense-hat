@@ -53,7 +53,7 @@ irb(main):004:0> display.set_pixels Array.new(64) { [0, 255, 0] }
 irb(main):005:0> display.clear
 irb(main):006:0> exit
 ```
-
+![Demo](https://github.com/rjlynch/ruby-sense-hat/blob/master/images/example.png)
 
 ## Usage
 
