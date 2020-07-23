@@ -16,13 +16,13 @@ module SenseHat
         fail ValueError, 'Pixel lists must have 64 elements'
       end
 
-      pixels = pixel_list.each_with_index.map do |rgb, i|
-        Pixel.new(position: i, red: rgb[0], green: rgb[1], blue: rgb[2])
+      pixels = pixel_list.map do |rgb|
+        Pixel.new(red: rgb[0], green: rgb[1], blue: rgb[2])
       end
 
       pixels.each(&:validate!)
 
-      @device.write pixels.sort_by(&:position).map(&:rgb565).join
+      @device.write pixels.map(&:rgb565).join
     end
 
     # Returns the RGB values of the pixels on the LED display.
@@ -35,8 +35,7 @@ module SenseHat
       raw = @device.read
       values = raw.unpack('S' * 64)
       values
-        .each_with_index
-        .map { |value, i| Pixel.new_from_rgb565(position: i, rgb565: value) }
+        .map(&Pixel.method(:new_from_rgb565))
         .map(&:to_a)
     end
 
