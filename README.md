@@ -70,7 +70,7 @@ irb(main):006:0> exit
 ```
 
 ### Setting the display
-Pass a 64 element array of RGB colour values to `SenseHat::Display#set_pixels`.  
+Pass a 64 element array of RGB colour values to `set_pixels`.  
 Each pixel is represented as an array of 3 integers in the range 0..255  
 indicating it's RGB value.  
 The below example would set the whole display to red.
