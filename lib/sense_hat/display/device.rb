@@ -21,10 +21,14 @@ module SenseHat
         )
       end
 
-      def open
+      def write(content)
         File.open(@device_path, 'wb') do |f|
-          yield f
+          f.write content
         end
+      end
+
+      def read
+        File.binread @device_path
       end
     end
   end

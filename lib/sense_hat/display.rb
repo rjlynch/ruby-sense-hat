@@ -22,19 +22,22 @@ module SenseHat
 
       pixels.each(&:validate!)
 
-      @device.open do |f|
-        f.write pixels.sort_by(&:position).map(&:rgb565).join
-      end
+      @device.write pixels.sort_by(&:position).map(&:rgb565).join
     end
 
+    # Returns the RGB values of the pixels on the LED display.
+    # Due to the rgb565 encoding red and blue values are capped at 248 and
+    # green is capped at 252. See this for a good explanation:
+    # https://stackoverflow.com/questions/25467682/rgb-565-why-6-bits-for-green-color
+    #
+    # @return [Array<Array><Int>] 64 element array of 3 element integer arrays.
     def get_pixels
-    end
-
-    def set_pixel(pixel)
-      # two bytes per pixel. 16 bit RGB565 value at file off set represents pixel.
-    end
-
-    def get_pixel
+      raw = @device.read
+      values = raw.unpack('S' * 64)
+      values
+        .each_with_index
+        .map { |value, i| Pixel.new_from_rgb565(position: i, rgb565: value) }
+        .map(&:to_a)
     end
 
     # Clears the LED display by setting all pixels to 0, 0, 0 RGB

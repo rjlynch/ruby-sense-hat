@@ -8,7 +8,7 @@ I prefer working with Ruby, so here's a Ruby interface for the raspberry-pi sens
     ### Display
     [x] clear  
     [x] set pixels  
-    [ ] get pixels  
+    [x] get pixels  
     [ ] set pixel  
     [ ] get pixel  
     [ ] rotation  
@@ -82,6 +82,17 @@ The below example would set the whole display to red.
     ...
     [255, 0, 0]
   ])
+```
+
+### Reading the display
+`get_display` will return the colour values of each LED.  
+Due to the RGB565 encoding the max value returned for red or blue will be 248
+and for green the max value will be 252.  
+See this [stackoverflow answer](https://stackoverflow.com/questions/25467682/rgb-565-why-6-bits-for-green-color)
+for more information.
+
+```ruby
+  display.get_pixels # => [[248, 0, 0], [248, 0, 0], ...  [248, 0, 0] ]
 ```
 
 ## Development

@@ -4,6 +4,15 @@ module SenseHat
       ALLOWED_INDEX_RANGE = (0..63).freeze
       ALLOWED_RGB_RANGE = (0..255).freeze
 
+      def self.new_from_rgb565(position:, rgb565:)
+        Pixel.new(
+          position: position,
+          red:   (((rgb565 & 0xf800) >> 11) << 3),
+          green: (((rgb565 & 0x07e0) >>  5) << 2),
+          blue:  (((rgb565 & 0x001f))       << 3)
+        )
+      end
+
       attr_reader :position, :red, :green, :blue
 
       def initialize(position:, red:, green:, blue:)
@@ -31,6 +40,10 @@ module SenseHat
 
       def rgb565
         [((@red >> 3) << 11) + ((@green >> 2) << 5) + ((@blue >> 3))].pack 'S'
+      end
+
+      def to_a
+        [@red, @green, @blue]
       end
     end
   end

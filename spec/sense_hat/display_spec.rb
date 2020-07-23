@@ -24,6 +24,10 @@ RSpec.describe SenseHat::Display do
     File.join spec_tmp_path, 'dev'
   end
 
+  let :last_pixel_red do
+    File.binread(File.join(spec_fixtures_path, 'last_pixel_red.bin'))
+  end
+
   # Copy our fake file system layout to a tmp dir for the spec run
   before :each do
     FileUtils.copy_entry spec_file_system_path, spec_tmp_path
@@ -67,10 +71,6 @@ RSpec.describe SenseHat::Display do
     context 'valid pixels' do
       let(:pixel_list) { Array.new(63) { [0, 0, 0] } + [[255, 0, 0]] }
 
-      let :last_pixel_red do
-        File.binread(File.join(spec_fixtures_path, 'last_pixel_red.bin'))
-      end
-
       before do
         display.set_pixels pixel_list
       end
@@ -78,6 +78,33 @@ RSpec.describe SenseHat::Display do
       it 'updates the device with the correct pixels' do
         expect(File.binread(File.join(dev_path, 'fb1'))).to eq last_pixel_red
       end
+    end
+  end
+
+  context '#get_pixels' do
+    let :device_path do
+      File.join dev_path, 'fb1'
+    end
+
+    let :device do
+      described_class.new
+    end
+
+    before :each do
+      @initial_device_content = File.binread device_path
+
+      # Update the fake device with sample data, in this case the data
+      # indicating one red pixel
+      File.binwrite device_path, last_pixel_red
+    end
+
+    after :each do
+      File.binwrite device_path, @initial_device_content
+    end
+
+    it 'returns an array of rgb values' do
+      expect(device.get_pixels).to \
+        eq(Array.new(63) { [0, 0, 0] } + [[248, 0, 0]])
     end
   end
 end
