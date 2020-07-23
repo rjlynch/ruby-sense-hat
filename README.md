@@ -16,7 +16,7 @@ I prefer working with Ruby, so here's a Ruby interface for the raspberry-pi sens
     [ ] flip_v  
     [ ] load_image  
     [ ] show_message  
-    [ ] show_letter  
+    [x] show_letter  
     
     ### Environment
     [ ] humidity  
@@ -81,6 +81,14 @@ The below example would set the whole display to red.
     ...
     [255, 0, 0]
   ])
+```
+
+`show_letter` displays a single character on the LED display.  
+It accepts optional keyword args for setting the colour and background.
+
+```ruby
+  display.show_letter 'A'
+  display.show_letter 'A', colour: [0, 0, 0], background: [248, 252, 248]
 ```
 
 ### Reading the display

@@ -34,6 +34,10 @@ module SenseHat
       set_pixels CLEAR
     end
 
+    def show_letter(char, colour: [255, 255, 255], background: [0, 0, 0])
+      set_pixels Letter.new(char.to_s.upcase, on: colour, off: background).to_a
+    end
+
     private
 
     def encode(array)
