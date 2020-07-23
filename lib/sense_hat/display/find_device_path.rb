@@ -4,9 +4,9 @@ module SenseHat
       # Frame buffer devices are listed as directories in /sys/class/graphics.
       # There's multiple fb devices, one is an emulator, one is the actual LED
       # display.
-      # We need to read the content of the name file in each fb dir to find the
+      # We need to read the content of the name file in each fb dir to find
       # which one is the real device.
-      # Once we know which is the real device we can read from it a
+      # Once we know which is the real device we can read from it at
       # /dev/<device-name>, eg /dev/fb1
       #
       # @param [String] frame_buffer_names_paths, path to search for available devices, eg '/sys/class/graphics/fb*'
