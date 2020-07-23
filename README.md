@@ -57,7 +57,7 @@ irb(main):006:0> exit
 
 ## Usage
 
-Initialize a display object
+### Initialize a display object
 
 ```ruby
   display = SenseHat::Display.new
@@ -85,7 +85,7 @@ The below example would set the whole display to red.
 ```
 
 ### Reading the display
-`get_display` will return the colour values of each LED.  
+`get_pixels` will return the colour values of each LED.  
 Due to the RGB565 encoding the max value returned for red or blue will be 248
 and for green the max value will be 252.  
 See this [stackoverflow answer](https://stackoverflow.com/questions/25467682/rgb-565-why-6-bits-for-green-color)
