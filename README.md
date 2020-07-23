@@ -102,7 +102,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sense_hat.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rjlynch/sense_hat.
 
 ## License
 
