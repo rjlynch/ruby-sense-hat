@@ -12,6 +12,10 @@ module SenseHat
         )
       end
 
+      def self.new_from_array(array)
+        Pixel.new red: array[0], green: array[1], blue: array[2]
+      end
+
       attr_reader :red, :green, :blue
 
       def initialize(red:, green:, blue:)
@@ -27,13 +31,13 @@ module SenseHat
       def validate!
         [red, green, blue].each do |colour|
           unless ALLOWED_RGB_RANGE.include? colour
-            fail ValueError, "rgb out off bounds #{self.inspect}"
+            raise ValueError, "rgb out off bounds #{self.inspect}"
           end
         end
       end
 
       def rgb565
-        [((@red >> 3) << 11) + ((@green >> 2) << 5) + ((@blue >> 3))].pack 'S'
+        [((@red >> 3) << 11) + ((@green >> 2) << 5) + ((@blue >> 3))]
       end
 
       def to_a
