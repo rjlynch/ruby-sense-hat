@@ -64,7 +64,7 @@ RSpec.describe SenseHat::Display do
       it 'raises' do
         expect { display.set_pixels(pixel_list) }.to \
           raise_error SenseHat::ValueError, \
-            'rgb out off bounds <#pixel index=63 red=400 green=255 blue=255>'
+            'rgb out off bounds <#pixel red=400 green=255 blue=255>'
       end
     end
 
