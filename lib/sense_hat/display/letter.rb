@@ -396,6 +396,16 @@ module SenseHat
           Only #{MAPS.keys} supported
           TEXT
       end
+
+      def to_a_row(row: 8)
+        # convert to 8 x 8 array list to be used on Text class.
+        pixels = to_a
+        [].tap do |pixels_row|
+          while pixels.size > 0
+            pixels_row << pixels.slice!(0, row)
+          end
+        end
+      end
     end
   end
 end
