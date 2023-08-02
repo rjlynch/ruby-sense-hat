@@ -54,8 +54,11 @@ module SenseHat
     end
 
     def finish_register_inputs
+      return if thread.nil?
+
       register_inputs_completed = true
       thread.exit if thread.status == 'sleep'
+      @thread = nil
       inputs
     end
 
