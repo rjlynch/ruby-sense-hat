@@ -51,6 +51,8 @@ module SenseHat
         sleep delay_speed(speed)
         position = 0 if on_loop && position >= scroll_text_size - 1
       end
+
+      true
     end
 
     private

@@ -2,12 +2,12 @@ module SenseHat
   class Display
     class Text
       EMPTY_PIXEL = [0, 0, 0].freeze
+      ROW_SIZE = 8
 
       attr_reader :encoded_text
 
       def initialize(text, on:, off:)
         @text = text
-        @row_size = 8
         @on = on
         @off = off
       end
@@ -15,7 +15,7 @@ module SenseHat
       def display(position: 0)
         encode_letter_from_text
           .each { |pixel_row| shift_and_pad_pixels(pixel_row, position)}
-          .map { |pixel_row| pixel_row.take @row_size }
+          .map { |pixel_row| pixel_row.take ROW_SIZE }
           .flatten(1)
       end
 
@@ -43,14 +43,11 @@ module SenseHat
         pixel_row.shift(position)
         pixel_row.tap do |pixels|
           # auto fill empty pixels if row of pixels less than row size
-          if pixels.size < @row_size
-            (@row_size - pixels.size).times { pixels << EMPTY_PIXEL }
+          if pixels.size < ROW_SIZE
+            (ROW_SIZE - pixels.size).times { pixels << EMPTY_PIXEL }
           end
         end
       end
     end
   end
 end
-
-# text = SenseHat::Display::Text.new('abc')
-# text.display
