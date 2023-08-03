@@ -27,7 +27,10 @@ I prefer working with Ruby, so here's a Ruby interface for the raspberry-pi sens
     ### IMU Sensor
     [ ] compass  
     [ ] gyro  
-    [ ] acceleration  
+    [ ] acceleration
+
+    ### Inputs
+    [x] Joystick
 </details>
 
 ## Installation
@@ -100,6 +103,54 @@ for more information.
 
 ```ruby
   display.get_pixels # => [[248, 0, 0], [248, 0, 0], ...  [248, 0, 0] ]
+```
+
+## Joystick
+### Initialize a Joystick object
+```ruby
+stick = SenseHat::Stick.new
+```
+### read single joystick input event
+reading input from joystick event.
+```ruby
+stick.wait_for_input
+# => [:right, :press]
+```
+result will be in format of
+```
+[direction, action]
+```
+direction and action will have possible results as followed:
+```ruby
+directions: [:left, :right, :up, :down, :enter]
+actions: [:press, :hold, :release]
+```
+to perform asynchronous reading for list of input events 
+```rb
+stick.start_register_inputs
+=> #<Thread:0x0000007f902a8040 /{project_root}/ruby-sense-hat/lib/sense_hat/stick.rb:49 run>
+```
+it will spawn new thread and start recording input event actions.
+
+to check for registered inputs,
+```rb
+stick.inputs
+=> [[:right, :press], [:right, :release], [:left, :press], [:left, :release]]
+=> 
+```
+clear registered inputs
+```rb
+stick.reset_inputs
+=> []
+```
+remember to stop recording for every recoding of input events registration.
+```rb
+stick.finish_register_inputs
+=> [[:right, :press], [:right, :release], [:left, :press], [:left, :release], [:up, :press], [:up, :release]]
+```
+You can check for thread spanwed and all available thread command can be found on official [Ruby Thread](https://ruby-doc.org/3.2.2/Thread.html) documentation.
+```rb
+stick.thread
 ```
 
 ## Development
