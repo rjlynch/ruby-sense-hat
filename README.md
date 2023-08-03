@@ -16,7 +16,8 @@ I prefer working with Ruby, so here's a Ruby interface for the raspberry-pi sens
     [ ] flip_v  
     [ ] load_image  
     [ ] show_message  
-    [x] show_letter  
+    [x] show_letter
+    [x] scroll text
     
     ### Environment
     [ ] humidity  
@@ -93,6 +94,13 @@ It accepts optional keyword args for setting the colour and background.
   display.show_letter 'A'
   display.show_letter 'A', colour: [0, 0, 0], background: [248, 252, 248]
 ```
+
+`scroll_text` displays text by scrolling each letter of the text on the LED display. It accepts optional keyword args for setting the colour, background, scroll speed and scroll looping.
+```ruby
+display.scroll_text 'hello world'
+display.scroll_text 'hello world', colour: [0, 0, 0], background: [248, 252, 248], speed: :fast, on_loop: true
+```
+*Note that text scrolling on loop will occupy the process indefinitely. Suggest to execute it under ruby thread for asynchronous multithreading.
 
 ### Reading the display
 `get_pixels` will return the colour values of each LED.  

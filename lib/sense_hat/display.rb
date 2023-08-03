@@ -1,6 +1,9 @@
+require "sense_hat/display/text"
+
 module SenseHat
   class Display
     CLEAR = Array.new(64) { [0, 0, 0] }
+    PAD_CHARACTER = ' '.freeze
 
     def initialize
       @device = Device.new
@@ -38,6 +41,20 @@ module SenseHat
       set_pixels Letter.new(char.to_s.upcase, on: colour, off: background).to_a
     end
 
+    def scroll_text(text, on_loop: false, speed: :normal, colour: [255, 255, 255], background: [0, 0, 0])
+      position = 0
+      scroll_text_size = (text.size + 1) * 8
+
+      while on_loop || position < scroll_text_size
+        show_text(PAD_CHARACTER + text, position:, colour:, background:)
+        position += 1
+        sleep delay_speed(speed)
+        position = 0 if on_loop && position >= scroll_text_size - 1
+      end
+
+      true
+    end
+
     private
 
     def encode(array)
@@ -54,6 +71,21 @@ module SenseHat
         .unpack('S' * 64)
         .map(&Pixel.method(:new_from_rgb565))
         .map(&:to_a)
+    end
+
+    def show_text(text, position: 0, colour: [255, 255, 255], background: [0, 0, 0])
+      set_pixels Text.new(text, on: colour, off: background).display(position:)
+    end
+
+    def delay_speed(scroll_speed)
+      case scroll_speed
+      when :fast
+        0.05
+      when :slow
+        0.3
+      else
+        0.1
+      end
     end
   end
 end
