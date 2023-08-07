@@ -6,6 +6,7 @@ module SenseHat
     extend Forwardable
 
     ANGLE_FORMATS = { r: :roll, p: :pitch, y: :yaw }.freeze
+    DEFAULT_FORMATS = { x: :x, y: :y, z: :z }
 
     def_delegators :@device, :imu
 
@@ -32,11 +33,23 @@ module SenseHat
     end
 
     def get_compass
+      # Gets the direction of North from the orientation in degrees
+      return unless imu_data_present?(:fusionPoseValid)
+
+      # Get data from fusionPose for z value.
+      # Result is -180 to +180
+      degree = radian_to_degree.call(imu.data[:fusionPose].to_a[2])
+      # Ressult is 0 to 360
+      degree < 0 ? degree + 360 : degree
+    end
+
+    def get_compass_raw
+      # Magnetometer x y z raw data in uT (micro teslas)
       return unless imu_data_present?(:compassValid)
 
-      ANGLE_FORMATS
+      DEFAULT_FORMATS
         .keys
-        .zip(convert_raw_data imu.data[:compass])
+        .zip(imu.data[:compass].to_a)
         .to_h
     end
 
