@@ -5,6 +5,7 @@ require "sense_hat/display/pixel"
 require "sense_hat/display/letter"
 require "sense_hat/display"
 require "sense_hat/stick"
+require "sense_hat/imu"
 
 module SenseHat
   class Error < StandardError; end
