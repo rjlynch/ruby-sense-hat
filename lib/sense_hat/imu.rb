@@ -9,6 +9,7 @@ module SenseHat
     DEFAULT_FORMAT_UNITS = { x: :degree, y: :degree, z: :degree }.freeze
     PRESSURE_FORMAT_UNITS = { pressure: :mbar }.freeze
     TEMPERATURE_FORMAT_UNITS = { temperature: :celsius }.freeze
+    HUMIDITY_FORMAT_UNITS = { humidity: :percentage }
 
     def_delegators :@device, :imu, :pressure, :humidity
 
@@ -68,8 +69,8 @@ module SenseHat
         .merge({ units: ANGLE_FORMAT_UNITS })
     end
 
+    # Returns the pressure in Millibars
     def get_pressure
-      # Returns the pressure in Millibars
       return unless pressure_data_present? :pressureValid
 
       PRESSURE_FORMAT_UNITS
@@ -79,6 +80,7 @@ module SenseHat
         .merge({ units: PRESSURE_FORMAT_UNITS })
     end
 
+    # Returns the temperature in Celsius from the pressure sensor
     def get_temperature_from_pressure
       return unless pressure_data_present? :pressureTemperatureValid
 
@@ -88,6 +90,30 @@ module SenseHat
         .to_h
         .merge({ units: TEMPERATURE_FORMAT_UNITS })
     end
+
+    # Returns the percentage of relative humidity
+    def get_humidity
+      return unless humidity_data_present? :humidityValid
+
+      HUMIDITY_FORMAT_UNITS
+        .keys
+        .zip([humidity.data[:humidity]])
+        .to_h
+        .merge({ units: HUMIDITY_FORMAT_UNITS })
+    end
+
+    # Returns the temperature in Celsius from the humidity sensor
+    def get_temperature_from_humidity
+      return unless humidity_data_present? :humidityTemperatureValid
+
+      TEMPERATURE_FORMAT_UNITS
+        .keys
+        .zip([humidity.data[:humidityTemperature]])
+        .to_h
+        .merge({ units: TEMPERATURE_FORMAT_UNITS })
+    end
+
+    alias get_temperature get_temperature_from_humidity
 
     def continuous_reading
       while true
@@ -109,6 +135,12 @@ module SenseHat
       pressure &&
         pressure.read &&
         pressure.data[type_valid]
+    end
+
+    def humidity_data_present?(type_valid)
+      humidity &&
+        humidity.read &&
+        humidity.data[type_valid]
     end
 
     def convert_radian_data(data)
