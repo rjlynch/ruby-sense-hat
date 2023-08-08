@@ -5,10 +5,12 @@ module SenseHat
   class Imu
     extend Forwardable
 
-    ANGLE_FORMATS = { r: :roll, p: :pitch, y: :yaw }.freeze
-    DEFAULT_FORMATS = { x: :x, y: :y, z: :z }
+    ANGLE_FORMAT_UNITS = { r: :degree, p: :degree, y: :degree }.freeze
+    DEFAULT_FORMAT_UNITS = { x: :degree, y: :degree, z: :degree }.freeze
+    PRESSURE_FORMAT_UNITS = { pressure: :mbar }.freeze
+    TEMPERATURE_FORMAT_UNITS = { temperature: :celsius }.freeze
 
-    def_delegators :@device, :imu
+    def_delegators :@device, :imu, :pressure, :humidity
 
     def initialize
       @device = Device.new
@@ -17,19 +19,21 @@ module SenseHat
     def get_accelerometer
       return unless imu_data_present?(:accelValid)
       
-      ANGLE_FORMATS
+      ANGLE_FORMAT_UNITS
         .keys
-        .zip(convert_raw_data imu.data[:accel])
+        .zip(convert_radian_data imu.data[:accel])
         .to_h
+        .merge({ units: ANGLE_FORMAT_UNITS }) 
     end
 
     def get_gyro
       return unless imu_data_present?(:gyroValid)
       
-      ANGLE_FORMATS
+      ANGLE_FORMAT_UNITS
         .keys
-        .zip(convert_raw_data imu.data[:gyro])
+        .zip(convert_radian_data imu.data[:gyro])
         .to_h
+        .merge({ units: ANGLE_FORMAT_UNITS }) 
     end
 
     def get_compass
@@ -47,19 +51,42 @@ module SenseHat
       # Magnetometer x y z raw data in uT (micro teslas)
       return unless imu_data_present?(:compassValid)
 
-      DEFAULT_FORMATS
+      DEFAULT_FORMAT_UNITS
         .keys
         .zip(imu.data[:compass].to_a)
         .to_h
+        .merge({ units: DEFAULT_FORMAT_UNITS })
     end
 
     def get_orientation
       return unless imu_data_present?(:fusionPoseValid)
 
-      ANGLE_FORMATS
+      ANGLE_FORMAT_UNITS
         .keys
-        .zip(convert_raw_data imu.data[:fusionPose])
+        .zip(convert_radian_data imu.data[:fusionPose])
         .to_h
+        .merge({ units: ANGLE_FORMAT_UNITS })
+    end
+
+    def get_pressure
+      # Returns the pressure in Millibars
+      return unless pressure_data_present? :pressureValid
+
+      PRESSURE_FORMAT_UNITS
+        .keys
+        .zip([pressure.data[:pressure]])
+        .to_h
+        .merge({ units: PRESSURE_FORMAT_UNITS })
+    end
+
+    def get_temperature_from_pressure
+      return unless pressure_data_present? :pressureTemperatureValid
+
+      TEMPERATURE_FORMAT_UNITS
+        .keys
+        .zip([pressure.data[:pressureTemperature]])
+        .to_h
+        .merge({ units: TEMPERATURE_FORMAT_UNITS })
     end
 
     def continuous_reading
@@ -78,7 +105,13 @@ module SenseHat
         imu.data[type_valid]
     end
 
-    def convert_raw_data(data)
+    def pressure_data_present?(type_valid)
+      pressure &&
+        pressure.read &&
+        pressure.data[type_valid]
+    end
+
+    def convert_radian_data(data)
       data
         .to_a
         .map(&radian_to_degree)
